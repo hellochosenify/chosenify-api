@@ -1,3 +1,4 @@
+import markdown
 from openai import OpenAI
 import os
 from dotenv import load_dotenv
@@ -21,42 +22,45 @@ User Scores:
 - Artistic: {scores.get("Artistic", 0)}
 - Enterprising: {scores.get("Enterprising", 0)}
 
-Return the report in this EXACT format:
+Return the report in clean Markdown format using:
+- ## for headings
+- ** for bold
+- - for bullet points
 
-1. Title: Career Analysis Report
+Structure:
 
-2. Profile Summary:
+## Career Analysis Report
+
+### Profile Summary
 (Write 3-4 lines describing the user personality and strengths)
 
-3. Top Strengths:
+### Top Strengths
 - Strength 1
 - Strength 2
 - Strength 3
 
-4. Career Matches:
+### Career Matches
 For each career include:
 - Career Name
 - Why it fits
 - Salary range
 - Growth outlook
 
-5. Skill Gaps:
+### Skill Gaps
 - Skill 1
 - Skill 2
 
-6. Action Plan:
+### Action Plan
 Step 1:
 Step 2:
 Step 3:
 
-7. Final Advice:
+### Final Advice
 (Short, powerful closing advice)
 
 IMPORTANT:
 - Keep formatting clean
-- Use bullet points
 - Do not add extra sections
-- Do not break structure
 """
 
         response = client.chat.completions.create(
@@ -67,8 +71,13 @@ IMPORTANT:
             ]
         )
 
-        return response.choices[0].message.content
+        report_markdown = response.choices[0].message.content
+
+        # ✅ CONVERT MARKDOWN → HTML (THIS IS THE FIX)
+        html_report = markdown.markdown(report_markdown)
+
+        return html_report
 
     except Exception as e:
         print("❌ ERROR:", str(e))
-        return f"Error: {str(e)}"
+        return f"<p>Error: {str(e)}</p>"
