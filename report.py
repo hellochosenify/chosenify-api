@@ -2,73 +2,83 @@ from openai import OpenAI
 import os
 from dotenv import load_dotenv
 
-# Load environment variables
 load_dotenv()
 
-# Initialize OpenAI client
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
+
 def generate_report(scores):
-    """
-    Generate a premium HTML career report
-    """
 
     prompt = f"""
-You are a premium career assessment expert.
+You are a world-class career psychologist and report generator.
 
-User scores:
-{scores}
+Create a HIGH-QUALITY, PREMIUM career report in clean HTML format.
 
-Generate a BEAUTIFULLY FORMATTED HTML career report.
+DO NOT return markdown.
+DO NOT explain anything.
+RETURN ONLY HTML.
 
-STRICT RULES:
-- ONLY return HTML (NO markdown)
-- Use clean structure
-- Use <h2> for section titles
-- Use <ul><li> for lists
-- Keep paragraphs short
-- Add spacing using <br>
+--------------------------------
+USER SCORES:
+Social: {scores.get("Social", 0)}
+Investigative: {scores.get("Investigative", 0)}
+Artistic: {scores.get("Artistic", 0)}
+Enterprising: {scores.get("Enterprising", 0)}
+--------------------------------
 
-STRUCTURE EXACTLY LIKE THIS:
+STRICT STRUCTURE (FOLLOW EXACTLY):
 
-<h2>🧠 Personality Summary</h2>
-<p>...</p>
+<h2>🧠 Career Personality Overview</h2>
+<p>Deep psychological interpretation of the personality. Avoid generic text.</p>
 
-<h2>💡 Key Traits</h2>
+<h2>📊 Strengths</h2>
 <ul>
-<li>...</li>
-<li>...</li>
+<li>Specific strength with explanation</li>
+<li>Specific strength with explanation</li>
+<li>Specific strength with explanation</li>
 </ul>
 
-<h2>🚀 Career Matches</h2>
+<h2>⚠️ Areas for Improvement</h2>
 <ul>
-<li>...</li>
-<li>...</li>
+<li>Specific weakness with improvement insight</li>
+<li>Specific weakness with improvement insight</li>
+<li>Specific weakness with improvement insight</li>
 </ul>
 
-<h2>✅ Strengths</h2>
+<h2>🚀 Top Career Matches</h2>
 <ul>
-<li>...</li>
+<li><strong>Career 1:</strong> Why it fits</li>
+<li><strong>Career 2:</strong> Why it fits</li>
+<li><strong>Career 3:</strong> Why it fits</li>
 </ul>
 
-<h2>⚠️ Areas to Improve</h2>
+<h2>💰 Career Insights</h2>
 <ul>
-<li>...</li>
+<li>Salary expectations</li>
+<li>Growth outlook</li>
+<li>Industry demand</li>
 </ul>
 
-<h2>📈 Action Plan</h2>
+<h2>📈 Personalized Growth Plan</h2>
 <ul>
-<li>...</li>
+<li>Step 1: Clear actionable step</li>
+<li>Step 2: Clear actionable step</li>
+<li>Step 3: Clear actionable step</li>
 </ul>
 
-Make it specific, structured, and premium.
-Avoid generic wording.
+--------------------------------
+
+RULES:
+- Make it feel like a $50 premium report
+- Avoid generic phrases like "you are good at"
+- Be specific, insightful, and professional
+- Use clean HTML only (h2, p, ul, li, strong)
 """
 
     response = client.chat.completions.create(
         model="gpt-4o-mini",
         messages=[
-            {"role": "system", "content": "You are a career coach."},
+            {"role": "system", "content": "You are a career report generator."},
             {"role": "user", "content": prompt}
         ],
         temperature=0.7
