@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 questions = [
     {
         "id": 1,
@@ -20,7 +19,7 @@ questions = [
         "question": "I like leading teams and taking decisions",
         "dimension": "Enterprising"
     }
-=======
+]
 questions = [
     {
         "id": 1,
@@ -42,5 +41,4 @@ questions = [
         "question": "I like leading teams and taking decisions",
         "dimension": "Enterprising"
     }
->>>>>>> b33e1b46d75edb4e95799c8091124c2313c182bf
 ]

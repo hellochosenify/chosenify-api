@@ -1,13 +1,5 @@
-<<<<<<< HEAD
 fastapi
 uvicorn
 openai
 python-dotenv
 markdown
-=======
-fastapi
-uvicorn
-openai
-python-dotenv
-markdown
->>>>>>> b33e1b46d75edb4e95799c8091124c2313c182bf
