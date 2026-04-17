@@ -1,17 +1,4 @@
 def calculate_scores(answers):
-    """
-    Calculate RIASEC scores based on answers (1–5 scale)
-    """
-
-    # Map each question to a dimension
-    dimensions = [
-        "Social", "Investigative", "Artistic", "Enterprising",
-        "Social", "Investigative", "Artistic", "Enterprising",
-        "Social", "Investigative", "Artistic", "Enterprising",
-        "Social", "Investigative", "Artistic", "Enterprising",
-        "Social", "Investigative", "Artistic", "Enterprising"
-    ]
-
     scores = {
         "Social": 0,
         "Investigative": 0,
@@ -19,10 +6,19 @@ def calculate_scores(answers):
         "Enterprising": 0
     }
 
-    for i in range(len(answers)):
-        value = int(answers[i])  # convert string → int
-        dimension = dimensions[i]
+    # Map questions to dimensions
+    mapping = [
+        "Social", "Investigative", "Artistic", "Enterprising",
+        "Social", "Realistic", "Investigative", "Artistic",
+        "Enterprising", "Conventional", "Realistic", "Investigative",
+        "Artistic", "Enterprising", "Conventional", "Realistic",
+        "Investigative", "Artistic", "Enterprising", "Conventional"
+    ]
 
-        scores[dimension] += value
+    for i, answer in enumerate(answers):
+        dimension = mapping[i]
+
+        if dimension in scores:
+            scores[dimension] += int(answer)
 
     return scores
