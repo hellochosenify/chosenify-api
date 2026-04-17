@@ -1,83 +1,72 @@
-import markdown
 from openai import OpenAI
 import os
 from dotenv import load_dotenv
+import markdown
 
-# Load .env file
+# Load environment variables
 load_dotenv()
 
-# Create OpenAI client
+# Initialize OpenAI client
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 def generate_report(scores):
-    try:
-        prompt = f"""
-You are a premium career advisor AI.
+    """
+    Generate a structured career report based on user scores
+    """
 
-Generate a highly structured, visually clean, premium career report.
+    prompt = f"""
+You are a professional career assessment expert.
 
-User Scores:
-- Social: {scores.get("Social", 0)}
-- Investigative: {scores.get("Investigative", 0)}
-- Artistic: {scores.get("Artistic", 0)}
-- Enterprising: {scores.get("Enterprising", 0)}
+User psychometric scores:
+{scores}
 
-Return the report in clean Markdown format using:
-- ## for headings
-- ** for bold
-- - for bullet points
+Generate a HIGH-QUALITY structured career report.
 
-Structure:
+Follow this EXACT format:
 
-## Career Analysis Report
+## Personality Summary
+Write 3-4 insightful lines explaining the user's personality based on scores.
 
-### Profile Summary
-(Write 3-4 lines describing the user personality and strengths)
+## Top Traits
+- Trait 1 (short explanation)
+- Trait 2 (short explanation)
+- Trait 3 (short explanation)
 
-### Top Strengths
+## Career Matches
+- Career Option 1 (why it fits)
+- Career Option 2 (why it fits)
+- Career Option 3 (why it fits)
+
+## Strengths
 - Strength 1
 - Strength 2
 - Strength 3
 
-### Career Matches
-For each career include:
-- Career Name
-- Why it fits
-- Salary range
-- Growth outlook
+## Areas to Improve
+- Weakness 1
+- Weakness 2
 
-### Skill Gaps
-- Skill 1
-- Skill 2
+## Action Plan
+- Step 1
+- Step 2
+- Step 3
 
-### Action Plan
-Step 1:
-Step 2:
-Step 3:
-
-### Final Advice
-(Short, powerful closing advice)
-
-IMPORTANT:
-- Keep formatting clean
-- Do not add extra sections
+Make it personalized, practical, and easy to read.
+Avoid generic advice.
 """
 
-        response = client.chat.completions.create(
-            model="gpt-4o-mini",
-            messages=[
-                {"role": "system", "content": "You are a career guidance expert."},
-                {"role": "user", "content": prompt}
-            ]
-        )
+    response = client.chat.completions.create(
+        model="gpt-4o-mini",
+        messages=[
+            {"role": "system", "content": "You are a career coach."},
+            {"role": "user", "content": prompt}
+        ],
+        temperature=0.7
+    )
 
-        report_markdown = response.choices[0].message.content
+    report_text = response.choices[0].message.content
 
-        # ✅ CONVERT MARKDOWN → HTML (THIS IS THE FIX)
-        html_report = markdown.markdown(report_markdown)
+    # Convert markdown → HTML
+    report_html = markdown.markdown(report_text)
 
-        return html_report
-
-    except Exception as e:
-        print("❌ ERROR:", str(e))
-        return f"<p>Error: {str(e)}</p>"
+    return report_html
