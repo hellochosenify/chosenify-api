@@ -16,6 +16,12 @@ def calculate_scores(answers):
 
     for i, answer in enumerate(answers):
         dimension = mapping[i]
-        scores[dimension] += answer
+        scores[dimension] += int(answer)  # FIX: convert to int
 
-    return scores
+    # 🔥 TOP TRAIT LOGIC
+    top_trait = max(scores, key=scores.get)
+
+    return {
+        "scores": scores,
+        "top_trait": top_trait
+    }
