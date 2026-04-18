@@ -7,18 +7,20 @@ def calculate_scores(answers):
     }
 
     mapping = [
-        "Social", "Investigative", "Artistic", "Enterprising",
-        "Social", "Investigative", "Artistic", "Enterprising",
-        "Social", "Investigative", "Artistic", "Enterprising",
-        "Social", "Investigative", "Artistic", "Enterprising",
-        "Social", "Investigative", "Artistic", "Enterprising"
+        "Social",
+        "Investigative",
+        "Artistic",
+        "Enterprising"
     ]
 
     for i, answer in enumerate(answers):
-        dimension = mapping[i]
-        scores[dimension] += int(answer)  # FIX: convert to int
+        if i < len(mapping):
+            dimension = mapping[i]
+            try:
+                scores[dimension] += int(answer)
+            except:
+                scores[dimension] += 0
 
-    # 🔥 TOP TRAIT LOGIC
     top_trait = max(scores, key=scores.get)
 
     return {

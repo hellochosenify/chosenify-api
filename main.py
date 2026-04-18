@@ -28,11 +28,15 @@ def root():
 @app.post("/submit-test")
 def submit_test(data: TestSubmission):
     try:
-        scores = calculate_scores(data.answers)
-        report = generate_report(scores)
+        scores_data = calculate_scores(data.answers)
+        report = generate_report(scores_data)
+        sorted_traits = sorted(scores_data["scores"], key=scores_data["scores"].get, reverse=True)
+        personality_type = f"{sorted_traits[0]}-{sorted_traits[1]}"
 
         return {
-            "scores": scores,
+            "scores": scores_data["scores"],
+            "top_trait": scores_data["top_trait"],
+            "personality_type": personality_type,
             "report": report
         }
 

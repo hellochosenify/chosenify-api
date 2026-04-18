@@ -1,0 +1,714 @@
+<div id="app"></div>
+
+<style>
+  #app,
+  #app * {
+    box-sizing: border-box;
+  }
+
+  #app {
+    font-family: Georgia, "Times New Roman", serif;
+    color: #000000;
+    background: linear-gradient(135deg, #f6f1e8 0%, #f6fbff 55%, #eef7f0 100%);
+    padding: 24px;
+  }
+
+  #app .cf-shell {
+    max-width: 1040px;
+    margin: 0 auto;
+    background: #ffffff;
+    border: 1px solid #ddd4c6;
+    border-radius: 28px;
+    overflow: hidden;
+    box-shadow: 0 24px 60px rgba(15, 23, 42, 0.12);
+  }
+
+  #app .cf-hero {
+    padding: 36px 24px 28px;
+    background:
+      radial-gradient(circle at top left, rgba(208, 146, 68, 0.18), transparent 30%),
+      radial-gradient(circle at top right, rgba(30, 107, 91, 0.16), transparent 28%),
+      #fffdf8;
+    border-bottom: 1px solid #ddd4c6;
+  }
+
+  #app .cf-eyebrow {
+    display: inline-block;
+    padding: 8px 12px;
+    border-radius: 999px;
+    background: #f3e9d9;
+    border: 1px solid #e5cfae;
+    color: #000000;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  #app .cf-hero h1 {
+    margin: 16px 0 10px;
+    color: #000000;
+    font-size: clamp(34px, 6vw, 56px);
+    line-height: 1.02;
+  }
+
+  #app .cf-hero p {
+    margin: 0;
+    max-width: 700px;
+    color: #4b5563;
+    font-size: 18px;
+    line-height: 1.7;
+  }
+
+  #app .cf-body {
+    padding: 24px;
+  }
+
+  #app .cf-panel {
+    background: #ffffff;
+    border: 1px solid #ddd4c6;
+    border-radius: 24px;
+    padding: 24px;
+  }
+
+  #app .cf-panel + .cf-panel {
+    margin-top: 20px;
+  }
+
+  #app .cf-panel h2,
+  #app .cf-panel h3,
+  #app .cf-panel p,
+  #app .cf-panel span,
+  #app .cf-panel strong,
+  #app .cf-panel li {
+    color: #000000;
+  }
+
+  #app .cf-subtle {
+    color: #4b5563 !important;
+    line-height: 1.7;
+  }
+
+  #app .cf-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 24px;
+  }
+
+  #app .cf-button {
+    appearance: none;
+    border: 0;
+    border-radius: 999px;
+    padding: 14px 22px;
+    background: #1e6b5b;
+    color: #ffffff !important;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.18s ease, background 0.18s ease;
+  }
+
+  #app .cf-button:hover {
+    transform: translateY(-1px);
+    background: #164f44;
+  }
+
+  #app .cf-button:disabled {
+    opacity: 0.72;
+    cursor: wait;
+    transform: none;
+  }
+
+  #app .cf-button.cf-secondary {
+    background: #efe5d8;
+    color: #231f1a !important;
+  }
+
+  #app .cf-question {
+    margin-top: 18px;
+    padding: 20px;
+    border-radius: 20px;
+    border: 1px solid #ddd4c6;
+    background: #fbf8f2;
+  }
+
+  #app .cf-question h3 {
+    margin: 0 0 8px;
+    font-size: 20px;
+  }
+
+  #app .cf-question p {
+    margin: 0 0 16px;
+    color: #4b5563 !important;
+    line-height: 1.6;
+  }
+
+  #app .cf-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 10px;
+  }
+
+  #app .cf-option {
+    position: relative;
+  }
+
+  #app .cf-option input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  #app .cf-option label {
+    display: block;
+    width: 100%;
+    padding: 12px 10px;
+    border-radius: 16px;
+    border: 1px solid #d7d2c8;
+    background: #ffffff;
+    color: #000000;
+    text-align: center;
+    cursor: pointer;
+    line-height: 1.35;
+    font-size: 14px;
+  }
+
+  #app .cf-option input:checked + label {
+    background: #e2f0eb;
+    border-color: #1e6b5b;
+  }
+
+  #app .cf-message {
+    margin-top: 18px;
+    padding: 14px 16px;
+    border-radius: 16px;
+    border: 1px solid #d1d9e6;
+    background: #eef6ff;
+    color: #000000;
+    line-height: 1.6;
+  }
+
+  #app .cf-error {
+    border-color: #efc6c6;
+    background: #fff1f1;
+  }
+
+  #app .cf-summary {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 14px;
+    margin-bottom: 18px;
+  }
+
+  #app .cf-card {
+    padding: 18px;
+    border-radius: 18px;
+    background: #fcfaf6;
+    border: 1px solid #ddd4c6;
+  }
+
+  #app .cf-card span {
+    display: block;
+    color: #4b5563 !important;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  #app .cf-card strong {
+    display: block;
+    margin-top: 8px;
+    font-size: 24px;
+  }
+
+  #app .cf-result-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 18px;
+    margin-top: 18px;
+  }
+
+  #app .cf-score-list {
+    display: grid;
+    gap: 10px;
+  }
+
+  #app .cf-score-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 14px;
+    border-radius: 14px;
+    background: #faf7f1;
+    border: 1px solid #ddd4c6;
+    color: #000000;
+  }
+
+  #app .cf-report {
+    margin-top: 20px;
+  }
+
+  #app .cf-report,
+  #app .cf-report * {
+    color: #000000 !important;
+  }
+
+  #app .cf-fallback {
+    padding: 14px 16px;
+    border-radius: 16px;
+    border: 1px dashed #ddd4c6;
+    background: #fffdfa;
+    color: #4b5563 !important;
+  }
+
+  @media (max-width: 767px) {
+    #app {
+      padding: 12px;
+    }
+
+    #app .cf-hero,
+    #app .cf-body,
+    #app .cf-panel {
+      padding: 18px;
+    }
+  }
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+  (function () {
+    var root = document.querySelector("#app") || document.body;
+    if (!root) {
+      return;
+    }
+
+    var API_URL = "https://chosenify-api.onrender.com/submit-test";
+    var QUESTIONS = [
+      { id: 1, question: "I enjoy helping people solve their problems" },
+      { id: 2, question: "I like working with numbers and data" },
+      { id: 3, question: "I enjoy creative activities like design or writing" },
+      { id: 4, question: "I like leading teams and taking decisions" }
+    ];
+    var TRAITS = ["Social", "Investigative", "Artistic", "Enterprising"];
+    var OPTIONS = [
+      { value: 1, label: "Strongly Disagree" },
+      { value: 2, label: "Disagree" },
+      { value: 3, label: "Neutral" },
+      { value: 4, label: "Agree" },
+      { value: 5, label: "Strongly Agree" }
+    ];
+
+    var state = {
+      step: "start",
+      answers: {},
+      loading: false,
+      error: "",
+      result: null
+    };
+
+    var radarChart = null;
+
+    function escapeHtml(value) {
+      return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+    }
+
+    function getNumber(value) {
+      var parsed = Number(value);
+      return Number.isFinite(parsed) ? parsed : null;
+    }
+
+    function getResolvedResult(data) {
+      var nestedScores = data?.scores?.scores ?? null;
+      var directScores = data?.scores ?? null;
+      var scores = nestedScores && typeof nestedScores === "object" ? nestedScores : directScores;
+
+      var resolvedScores = {
+        Social: getNumber(scores?.Social ?? null),
+        Investigative: getNumber(scores?.Investigative ?? null),
+        Artistic: getNumber(scores?.Artistic ?? null),
+        Enterprising: getNumber(scores?.Enterprising ?? null)
+      };
+
+      var topTrait = data?.scores?.top_trait ?? data?.top_trait ?? getTopTrait(resolvedScores);
+      var personalityType = data?.personality_type ?? data?.scores?.personality_type ?? buildPersonalityType(resolvedScores, topTrait);
+
+      return {
+        scores: resolvedScores,
+        topTrait: topTrait || "Unavailable",
+        personalityType: personalityType || "Unavailable",
+        report: typeof data?.report === "string" ? data.report : ""
+      };
+    }
+
+    function getTopTrait(scores) {
+      var bestTrait = "";
+      var bestScore = -Infinity;
+
+      TRAITS.forEach(function (trait) {
+        var value = getNumber(scores?.[trait]);
+        if (value !== null && value > bestScore) {
+          bestScore = value;
+          bestTrait = trait;
+        }
+      });
+
+      return bestTrait || "Unavailable";
+    }
+
+    function buildPersonalityType(scores, topTrait) {
+      var ranked = TRAITS
+        .map(function (trait) {
+          return { trait: trait, value: getNumber(scores?.[trait]) };
+        })
+        .filter(function (item) {
+          return item.value !== null;
+        })
+        .sort(function (a, b) {
+          return b.value - a.value;
+        });
+
+      if (ranked.length >= 2) {
+        return ranked[0].trait + "-" + ranked[1].trait;
+      }
+
+      return topTrait || "Unavailable";
+    }
+
+    function sanitizeReport(reportHtml) {
+      if (!reportHtml) {
+        return "";
+      }
+
+      var wrapper = document.createElement("div");
+      wrapper.innerHTML = reportHtml;
+
+      Array.prototype.slice.call(wrapper.querySelectorAll("section")).forEach(function (section) {
+        var heading = section.querySelector("h2");
+        var text = heading ? heading.textContent || "" : "";
+        if (/score snapshot/i.test(text)) {
+          section.remove();
+        }
+      });
+
+      return wrapper.innerHTML;
+    }
+
+    function renderStart() {
+      return (
+        '<div class="cf-panel">' +
+          "<h2>Start your assessment</h2>" +
+          '<p class="cf-subtle">Begin with a clean screen, answer each question, then view results only after the live API responds.</p>' +
+          '<div class="cf-actions">' +
+            '<button class="cf-button" type="button" data-action="start">Start</button>' +
+          "</div>" +
+        "</div>"
+      );
+    }
+
+    function renderQuestions() {
+      return (
+        '<div class="cf-panel">' +
+          "<h2>Questions</h2>" +
+          '<p class="cf-subtle">Select one answer for each statement, then submit to fetch your report.</p>' +
+          QUESTIONS.map(function (item, index) {
+            return (
+              '<div class="cf-question">' +
+                "<h3>Question " + (index + 1) + "</h3>" +
+                "<p>" + escapeHtml(item.question) + "</p>" +
+                '<div class="cf-options">' +
+                  OPTIONS.map(function (option) {
+                    var inputId = "cf-q" + item.id + "-" + option.value;
+                    var checked = getNumber(state.answers[item.id]) === option.value ? " checked" : "";
+                    return (
+                      '<div class="cf-option">' +
+                        '<input type="radio" id="' + inputId + '" name="question-' + item.id + '" value="' + option.value + '"' + checked + ">" +
+                        '<label for="' + inputId + '">' + escapeHtml(option.label) + "</label>" +
+                      "</div>"
+                    );
+                  }).join("") +
+                "</div>" +
+              "</div>"
+            );
+          }).join("") +
+          '<div class="cf-actions">' +
+            '<button class="cf-button" type="button" data-action="submit"' + (state.loading ? " disabled" : "") + ">Submit</button>" +
+            '<button class="cf-button cf-secondary" type="button" data-action="restart">Start Over</button>' +
+          "</div>" +
+          (state.loading ? '<div class="cf-message">Submitting answers and waiting for the API response...</div>' : "") +
+          (state.error ? '<div class="cf-message cf-error">' + escapeHtml(state.error) + "</div>" : "") +
+        "</div>"
+      );
+    }
+
+    function renderScores(scores) {
+      var rows = TRAITS.map(function (trait) {
+        var value = scores?.[trait];
+        if (value === null || value === undefined) {
+          return "";
+        }
+
+        return (
+          '<div class="cf-score-row">' +
+            "<span>" + escapeHtml(trait) + "</span>" +
+            "<strong>" + escapeHtml(String(value)) + "</strong>" +
+          "</div>"
+        );
+      }).join("");
+
+      if (!rows) {
+        return '<div class="cf-fallback">Scores were missing from the API response.</div>';
+      }
+
+      return '<div class="cf-score-list">' + rows + "</div>";
+    }
+
+    function renderResults() {
+      if (!state.result) {
+        return "";
+      }
+
+      var cleanReport = sanitizeReport(state.result.report);
+
+      return (
+        '<div class="cf-panel">' +
+          "<h2>Your results</h2>" +
+          '<p class="cf-subtle">This section appears only after the API returns real score data.</p>' +
+          '<div class="cf-summary">' +
+            '<div class="cf-card"><span>Top Trait</span><strong>' + escapeHtml(state.result.topTrait) + "</strong></div>" +
+            '<div class="cf-card"><span>Personality Type</span><strong>' + escapeHtml(state.result.personalityType) + "</strong></div>" +
+            '<div class="cf-card"><span>Answers Sent</span><strong>' + escapeHtml(String(QUESTIONS.length)) + "</strong></div>" +
+          "</div>" +
+          '<div class="cf-result-grid">' +
+            '<div class="cf-panel" style="margin:0;">' +
+              "<h3>Radar Chart</h3>" +
+              '<p class="cf-subtle">Built only after the response is received.</p>' +
+              '<canvas id="radarChart"></canvas>' +
+            "</div>" +
+            '<div class="cf-panel" style="margin:0;">' +
+              "<h3>Scores</h3>" +
+              renderScores(state.result.scores) +
+            "</div>" +
+          "</div>" +
+          '<div class="cf-report">' +
+            (cleanReport || '<div class="cf-fallback">Report HTML was not returned by the API.</div>') +
+          "</div>" +
+        "</div>"
+      );
+    }
+
+    function render() {
+      root.innerHTML =
+        '<div class="cf-shell">' +
+          '<div class="cf-hero">' +
+            '<div class="cf-eyebrow">Chosenify</div>' +
+            "<h1>Career clarity, rendered cleanly.</h1>" +
+            '<p>Start the quiz, answer the questions, and reveal one live result view after the API responds.</p>' +
+          "</div>" +
+          '<div class="cf-body">' +
+            (state.step === "start" ? renderStart() : renderQuestions()) +
+            (state.step === "results" ? renderResults() : "") +
+          "</div>" +
+        "</div>";
+
+      bindEvents();
+      renderChartIfReady();
+    }
+
+    function bindEvents() {
+      var startButton = root.querySelector('[data-action="start"]');
+      if (startButton) {
+        startButton.addEventListener("click", function () {
+          state.step = "questions";
+          state.error = "";
+          state.result = null;
+          render();
+        });
+      }
+
+      var restartButton = root.querySelector('[data-action="restart"]');
+      if (restartButton) {
+        restartButton.addEventListener("click", function () {
+          state.step = "start";
+          state.answers = {};
+          state.loading = false;
+          state.error = "";
+          state.result = null;
+          destroyChart();
+          render();
+        });
+      }
+
+      var submitButton = root.querySelector('[data-action="submit"]');
+      if (submitButton) {
+        submitButton.addEventListener("click", handleSubmit);
+      }
+
+      Array.prototype.slice.call(root.querySelectorAll('input[type="radio"]')).forEach(function (input) {
+        input.addEventListener("change", function (event) {
+          var target = event.target;
+          var name = target?.name || "";
+          var parts = name.split("-");
+          var questionId = parts[1];
+          if (!questionId) {
+            return;
+          }
+
+          state.answers[questionId] = Number(target?.value);
+        });
+      });
+    }
+
+    function destroyChart() {
+      if (radarChart) {
+        radarChart.destroy();
+        radarChart = null;
+      }
+    }
+
+    function renderChartIfReady() {
+      if (state.step !== "results" || !state.result) {
+        destroyChart();
+        return;
+      }
+
+      var canvas = root.querySelector("#radarChart");
+      if (!canvas || typeof window.Chart === "undefined") {
+        return;
+      }
+
+      var values = TRAITS.map(function (trait) {
+        return getNumber(state.result?.scores?.[trait]);
+      });
+
+      var hasMissing = values.some(function (value) {
+        return value === null;
+      });
+
+      if (hasMissing) {
+        return;
+      }
+
+      destroyChart();
+
+      radarChart = new window.Chart(canvas, {
+        type: "radar",
+        data: {
+          labels: TRAITS,
+          datasets: [
+            {
+              label: "Chosenify Scores",
+              data: values,
+              fill: true,
+              backgroundColor: "rgba(30, 107, 91, 0.18)",
+              borderColor: "#1e6b5b",
+              pointBackgroundColor: "#d09244",
+              pointBorderColor: "#ffffff",
+              pointHoverBackgroundColor: "#ffffff",
+              pointHoverBorderColor: "#1e6b5b"
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: true,
+          scales: {
+            r: {
+              beginAtZero: true,
+              angleLines: { color: "#d7d2c8" },
+              grid: { color: "#d7d2c8" },
+              pointLabels: {
+                color: "#000000",
+                font: { size: 13 }
+              },
+              ticks: {
+                color: "#4b5563",
+                backdropColor: "transparent",
+                stepSize: 1
+              }
+            }
+          },
+          plugins: {
+            legend: {
+              labels: {
+                color: "#000000"
+              }
+            }
+          }
+        }
+      });
+    }
+
+    function handleSubmit() {
+      if (state.loading) {
+        return;
+      }
+
+      var incomplete = QUESTIONS.some(function (item) {
+        return getNumber(state.answers[item.id]) === null;
+      });
+
+      if (incomplete) {
+        state.error = "Please answer every question before submitting.";
+        render();
+        return;
+      }
+
+      state.loading = true;
+      state.error = "";
+      state.result = null;
+      render();
+
+      fetch(API_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          answers: QUESTIONS.map(function (item) {
+            return Number(state.answers[item.id]);
+          })
+        })
+      })
+        .then(function (response) {
+          if (!response.ok) {
+            throw new Error("The API request failed with status " + response.status + ".");
+          }
+
+          return response.json();
+        })
+        .then(function (data) {
+          console.log(data);
+
+          var result = getResolvedResult(data);
+          var hasValidScores = TRAITS.every(function (trait) {
+            return result.scores?.[trait] !== null;
+          });
+
+          if (!hasValidScores) {
+            throw new Error("The API response did not include complete score data.");
+          }
+
+          state.result = result;
+          state.step = "results";
+        })
+        .catch(function (error) {
+          state.error = error?.message || "Something went wrong while loading results.";
+          state.step = "questions";
+          state.result = null;
+        })
+        .finally(function () {
+          state.loading = false;
+          render();
+        });
+    }
+
+    render();
+  })();
+</script>
