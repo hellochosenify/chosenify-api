@@ -171,3 +171,93 @@ Frontend must:
 - NEVER show undefined values
 - NEVER break on missing elements
 - ALWAYS display report correctly
+
+---
+
+## Premium Report System (Stage 2 – Monetization)
+
+### Objective
+Introduce report gating:
+- Free users → limited report
+- Paid users → full report
+
+---
+
+### Report Gating Rules
+
+- System MUST support two report modes:
+  1. Free Report
+  2. Premium Report
+
+---
+
+### Free Report Requirements
+
+Must ONLY include:
+- Overview
+- Top Trait Explanation
+
+Must NOT include:
+- Strengths
+- Weaknesses
+- Career Matches
+- Growth Plan
+
+---
+
+### Premium Report Requirements
+
+Must include FULL report:
+- Overview
+- Top Trait Explanation
+- Strengths
+- Weaknesses
+- Career Matches
+- Growth Plan
+
+---
+
+### Backend Logic Rules
+
+- Read user_type from request:
+  user_type = data.get("user_type", "free")
+
+- Default must ALWAYS be "free"
+
+- Report selection logic:
+
+if user_type == "free":
+    generate_free_report()
+else:
+    generate_full_report()
+
+---
+
+### Implementation Rules
+
+- Do NOT break existing API response structure
+- report field must still return HTML
+- Do NOT remove existing fields
+- Do NOT modify scoring logic
+- Do NOT rename endpoint
+
+---
+
+### Code Structure Rules
+
+- Create two functions in report.py:
+  - generate_free_report(scores)
+  - generate_full_report(scores)
+
+- Reuse existing GPT logic safely
+- Avoid duplication where possible
+
+---
+
+### Safety Rules
+
+- If user_type is missing → treat as "free"
+- Never expose premium content to free users
+- Ensure both reports return valid HTML
+
+---

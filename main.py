@@ -4,7 +4,7 @@ from typing import List
 from fastapi.middleware.cors import CORSMiddleware
 
 from scoring import calculate_scores
-from report import generate_report
+from report import generate_free_report, generate_full_report
 
 app = FastAPI()
 
@@ -20,6 +20,7 @@ app.add_middleware(
 # ✅ Request model (FIXED TYPE)
 class TestSubmission(BaseModel):
     answers: List[int]
+    user_type: str = "free"
 
 @app.get("/")
 def root():
@@ -29,7 +30,11 @@ def root():
 def submit_test(data: TestSubmission):
     try:
         scores_data = calculate_scores(data.answers)
-        report = generate_report(scores_data)
+        user_type = getattr(data, "user_type", "free")
+        if user_type == "free":
+            report = generate_free_report(scores_data)
+        else:
+            report = generate_full_report(scores_data)
         sorted_traits = sorted(scores_data["scores"], key=scores_data["scores"].get, reverse=True)
         personality_type = f"{sorted_traits[0]}-{sorted_traits[1]}"
 
